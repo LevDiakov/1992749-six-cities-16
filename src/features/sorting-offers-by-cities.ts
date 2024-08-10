@@ -6,7 +6,7 @@ import { offers } from '../mocks/offers';
 import { AuthorizationStatus } from '../const';
 
 
-export type SortOption = string;//'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
+export type SortOption = string; //'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
 
 type InitialState = {
   currentCity: string;
