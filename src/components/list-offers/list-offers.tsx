@@ -32,13 +32,17 @@ function ListOffers({stateOffers, onListOfferHover, selectedOffer, currentCity}:
 
           <div className="cities__places-list places__list tabs__content">
 
-            {offersForCurrentCityBySortOption.map((item) => <PlaceCard onListOfferHover={onListOfferHover} key={item.id} offer={item} className='cities'/>)}
+            {offersForCurrentCity.length < 1 ? 'No places to stay available' :
+              offersForCurrentCityBySortOption.map((item) => <PlaceCard onListOfferHover={onListOfferHover} key={item.id} offer={item} className='cities'/>)}
 
           </div>
 
         </section>
         <div className="cities__right-section">
-          <Map city={offersForCurrentCity[0].city} offers={offersForCurrentCity} selectedOffer={selectedOffer} className='cities'/>
+
+          {offersForCurrentCity.length < 1 ? <section className="cities__map map"></section> :
+            <Map city={offersForCurrentCity[0].city} offers={offersForCurrentCity} selectedOffer={selectedOffer} className='cities'/>}
+
         </div>
       </div>
     </div>
