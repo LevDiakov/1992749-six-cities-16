@@ -6,7 +6,7 @@ import { offers } from '../mocks/offers';
 import { AuthorizationStatus } from '../const';
 
 
-export type SortOption = string; //'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
+export type SortOption = string;//'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
 
 type InitialState = {
   currentCity: string;
@@ -17,7 +17,17 @@ type InitialState = {
 
 const initialState: InitialState = {
   currentCity: 'Paris',
-  offers: [],
+  offers: [{id: '', title: '', type: 'type', price: 0, previewImage: '',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {latitude: 0, longitude: 0, zoom: 0}, isFavorite: false, isPremium: false, rating: 0
+  },],
   sortOption: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
 };

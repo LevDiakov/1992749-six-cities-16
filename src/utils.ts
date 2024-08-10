@@ -46,3 +46,22 @@ export const getSortedByDates = (a: userReview, b: userReview) => (new Date(b.da
 export const getPricesLowToHigh = (a: Offer, b: Offer) => (a.price - b.price);
 export const getPricesHighToLow = (a: Offer, b: Offer) => (b.price - a.price);
 export const getTopRatedFirst = (a: Offer, b: Offer) => (b.rating - a.rating);
+
+export const getOffersForCurrentCityBySortOption =
+(currentSortOption: string, offersForCurrentCity: Offer[], offersForCurrentCityBySortOption: Offer[]) => {
+
+  if (currentSortOption === 'Price: low to high') {
+    offersForCurrentCityBySortOption = offersForCurrentCity.sort(getPricesLowToHigh);
+  } else
+    if (currentSortOption === 'Price: high to low') {
+      offersForCurrentCityBySortOption = offersForCurrentCity.sort(getPricesHighToLow);
+    } else
+      if (currentSortOption === 'Top rated first') {
+        offersForCurrentCityBySortOption = offersForCurrentCity.sort(getTopRatedFirst);
+      } else
+        if (currentSortOption === 'Popular') {
+          offersForCurrentCityBySortOption = offersForCurrentCity;
+        }
+
+  return offersForCurrentCityBySortOption;
+};

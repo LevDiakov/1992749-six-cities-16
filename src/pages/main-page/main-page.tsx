@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
 import ListOffers from '../../components/list-offers/list-offers';
-import { CITY, CITY_NAMES } from '../../const';
+import { CITY_NAMES } from '../../const';
 import { Offer } from '../../types/types';
 import Map from '../../components/map/map';
 import { useState } from 'react';
 import { setCurrentCity, SortOption } from '../../features/sorting-offers-by-cities';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import SortOptions from '../../components/sort-options/sort-options';
-import { getPricesHighToLow, getPricesLowToHigh, getTopRatedFirst } from '../../utils';
-import { offers } from '../../mocks/offers';
+import { getOffersForCurrentCityBySortOption } from '../../utils';
 
 type MainPageProps = {
   stateOffers: Offer[];
@@ -28,22 +27,11 @@ function MainPage({stateOffers}: MainPageProps): JSX.Element {
     dispatch(setCurrentCity(city));
   };
 
-  const offersForCurrentCity = offers.filter((item) => item.city.name === currentCity);
+  const offersForCurrentCity = stateOffers.filter((item) => item.city.name === currentCity);
   const currentSortOption: SortOption = useAppSelector((state) => state.rental.sortOption);
 
-  let offersForCurrentCityBySortOption: Offer[] = offersForCurrentCity;
-  if (currentSortOption === 'Price: low to high') {
-    offersForCurrentCityBySortOption = offersForCurrentCity.sort(getPricesLowToHigh);
-  }
-  if (currentSortOption === 'Price: high to low') {
-    offersForCurrentCityBySortOption = offersForCurrentCity.sort(getPricesHighToLow);
-  }
-  if (currentSortOption === 'Top rated first') {
-    offersForCurrentCityBySortOption = offersForCurrentCity.sort(getTopRatedFirst);
-  }
-  if (currentSortOption === 'Popular') {
-    offersForCurrentCityBySortOption = offersForCurrentCity;
-  }
+  const offersForCurrentCityBySortOption: Offer[] = offersForCurrentCity;
+  getOffersForCurrentCityBySortOption(currentSortOption, offersForCurrentCity, offersForCurrentCityBySortOption);
 
   return (
 
@@ -78,7 +66,7 @@ function MainPage({stateOffers}: MainPageProps): JSX.Element {
 
             </section>
             <div className="cities__right-section">
-              <Map city={offersForCurrentCity[0].city ?? CITY} offers={offersForCurrentCity} selectedOffer={selectedOffer} className='cities'/>
+              <Map city={offersForCurrentCity[0].city} offers={offersForCurrentCity} selectedOffer={selectedOffer} className='cities'/>
             </div>
           </div>
         </div>
