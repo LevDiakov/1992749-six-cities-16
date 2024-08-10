@@ -17,17 +17,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   currentCity: 'Paris',
-  offers: [{id: '', title: '', type: 'type', price: 0, previewImage: '',
-    city: {
-      name: 'Paris',
-      location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
-        zoom: 13
-      }
-    },
-    location: {latitude: 0, longitude: 0, zoom: 0}, isFavorite: false, isPremium: false, rating: 0
-  },],
+  offers: [],
   sortOption: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
 };

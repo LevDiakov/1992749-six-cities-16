@@ -10,18 +10,12 @@ import PrivateRoute from '../private-route/private-route';
 import { PublicRoute } from '../public-route/public-route';
 import { getAuthorizationStatus } from '../../authorization-status';
 import { reviews } from '../../mocks/reviews';
-import { useEffect } from 'react';
-import { loadOffers } from '../../features/sorting-offers-by-cities';
 import { fullOffers } from '../../mocks/full-offers';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 
 
 function App(): JSX.Element {
   const authorizationStatus = getAuthorizationStatus();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(loadOffers());
-  }, [dispatch]);
   const stateOffers = useAppSelector((state) => state.rental.offers);
   const favorites = stateOffers.filter((item) => item.isFavorite);
 
