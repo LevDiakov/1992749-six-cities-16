@@ -41,7 +41,7 @@ const rentalSlice = createSlice({
   }
 });
 
-export const { setCurrentCity, setOffers, setSortOption} = rentalSlice.actions;
+export const { setCurrentCity, setOffers, setSortOption, requireAuthorization } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 
