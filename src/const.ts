@@ -41,3 +41,11 @@ export enum NumericalValues {
 }
 
 export const sortOptions: string[] = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}

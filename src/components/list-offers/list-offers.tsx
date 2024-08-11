@@ -1,6 +1,6 @@
-import { SortOption } from '../../features/sorting-offers-by-cities';
+
 import { useAppSelector } from '../../store/hooks';
-import { Offer } from '../../types/types';
+import { Offer, SortOption } from '../../types/types';
 import { getOffersForCurrentCityBySortOption } from '../../utils';
 import PlaceCard from '../place-card/place-card';
 import SortOptions from '../sort-options/sort-options';

@@ -63,3 +63,16 @@ export type userReviews = userReview[];
 export type CardsByCityType = {
   [key: string]: Offer[];
 }
+
+export type SortOption = string; //'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
+
+export type AuthData = {
+  login: string;
+  password: string;
+};
+
+export type UserData = {
+  id: number;
+  email: string;
+  token: string;
+};

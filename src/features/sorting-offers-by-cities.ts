@@ -1,12 +1,9 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Offer } from '../types/types';
+import { Offer, SortOption } from '../types/types';
 import { AppDispatch } from '../store';
 import { offers } from '../mocks/offers';
 import { AuthorizationStatus } from '../const';
-
-
-export type SortOption = string; //'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
 
 type InitialState = {
   currentCity: string;
@@ -40,13 +37,13 @@ const rentalSlice = createSlice({
     requireAuthorization: (state, action: PayloadAction<AuthorizationStatus>) => {
       state.authorizationStatus = action.payload;
     },
-    setError: (state, action: PayloadAction<AuthorizationStatus>) => {
+    setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
   }
 });
 
-export const { setCurrentCity, setOffers, setSortOption, requireAuthorization } = rentalSlice.actions;
+export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 
