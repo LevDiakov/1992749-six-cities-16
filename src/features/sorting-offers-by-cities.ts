@@ -13,6 +13,7 @@ type InitialState = {
   offers: Offer[];
   sortOption: SortOption;
   authorizationStatus: AuthorizationStatus;
+  error: string | null;
 }
 
 const initialState: InitialState = {
@@ -20,6 +21,7 @@ const initialState: InitialState = {
   offers: [],
   sortOption: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
 };
 
 const rentalSlice = createSlice({
@@ -37,6 +39,9 @@ const rentalSlice = createSlice({
     },
     requireAuthorization: (state, action: PayloadAction<AuthorizationStatus>) => {
       state.authorizationStatus = action.payload;
+    },
+    setError: (state, action: PayloadAction<AuthorizationStatus>) => {
+      state.error = action.payload;
     },
   }
 });
