@@ -32,6 +32,7 @@ function Map({city, offers, selectedOffer, className}: MapProps) {
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
+      map.setView([ city.location.latitude, city.location.longitude ], city.location.zoom);
 
       offers.forEach((point) => {
         const marker = new Marker({
@@ -52,7 +53,7 @@ function Map({city, offers, selectedOffer, className}: MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [city.location.latitude, city.location.longitude, city.location.zoom, map, offers, selectedOffer]);
 
   return (
     <section className={`${className}__map map`} ref={mapRef}></section>

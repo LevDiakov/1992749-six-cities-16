@@ -1,22 +1,26 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Offer } from '../types/types';
+import { Offer, SortOption } from '../types/types';
 import { AppDispatch } from '../store';
 import { offers } from '../mocks/offers';
-
-
-export type SortOption = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
+import { AuthorizationStatus } from '../const';
 
 type InitialState = {
   currentCity: string;
   offers: Offer[];
   sortOption: SortOption;
+  authorizationStatus: AuthorizationStatus;
+  error: string | null;
+  isOffersDataLoading: boolean;
 }
 
 const initialState: InitialState = {
   currentCity: 'Paris',
   offers: [],
-  sortOption: 'Popular'
+  sortOption: 'Popular',
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
+  isOffersDataLoading: false,
 };
 
 const rentalSlice = createSlice({
@@ -32,14 +36,22 @@ const rentalSlice = createSlice({
     setSortOption: (state, action: PayloadAction<SortOption>) => {
       state.sortOption = action.payload;
     },
+    requireAuthorization: (state, action: PayloadAction<AuthorizationStatus>) => {
+      state.authorizationStatus = action.payload;
+    },
+    setError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
+    setOffersDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isOffersDataLoading = action.payload;
+    },
   }
 });
 
-export const { setCurrentCity, setOffers, setSortOption} = rentalSlice.actions;
+export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 
 export const loadOffers = () => (dispatch: AppDispatch) => { // func для загрузки моковых данных в store
   dispatch(setOffers(offers));
 };
-

@@ -1,6 +1,6 @@
 import { Offer } from '../../types/types';
 import { Link } from 'react-router-dom';
-import { AppRoute, numericalValues } from '../../const';
+import { AppRoute, NumericalValues } from '../../const';
 import { getCapitalLetter } from '../../utils';
 import FavoriteButton from '../favorite-button/favorite-button';
 
@@ -16,11 +16,7 @@ function PlaceCard({offer, className, onListOfferHover}: PlaceCardProps): JSX.El
   return (
     <article className={`${className}__card place-card`}
       onMouseEnter={() => onListOfferHover && onListOfferHover(id)}
-      onMouseLeave={() => {
-        if(onListOfferHover) {
-          onListOfferHover(undefined);
-        }
-      }}
+      onMouseLeave={() => onListOfferHover && onListOfferHover(undefined)}
     >
       { isPremium ?
         <div className="place-card__mark">
@@ -41,7 +37,7 @@ function PlaceCard({offer, className, onListOfferHover}: PlaceCardProps): JSX.El
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(rating * numericalValues.Twenty)}%`}}></span>
+            <span style={{width: `${(rating * NumericalValues.Twenty)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

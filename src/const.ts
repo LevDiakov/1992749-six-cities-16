@@ -33,7 +33,7 @@ export const URL_MARKER_DEFAULT = 'markup/img/pin.svg';
 
 export const URL_MARKER_CURRENT = 'markup/img/pin-active.svg';
 
-export enum numericalValues {
+export enum NumericalValues {
   Zero = 0,
   Three = 3,
   Four = 4,
@@ -41,3 +41,11 @@ export enum numericalValues {
 }
 
 export const sortOptions: string[] = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}

@@ -1,8 +1,9 @@
 import cn from 'classnames';
 import { useState } from 'react';
 import { useAppDispatch } from '../../store/hooks';
-import { setSortOption, SortOption } from '../../features/sorting-offers-by-cities';
+import { setSortOption } from '../../features/sorting-offers-by-cities';
 import { sortOptions } from '../../const';
+import { SortOption } from '../../types/types';
 
 type SortOptionsProps = {
   currentSortOption: SortOption;
@@ -17,7 +18,7 @@ function SortOptions({currentSortOption}: SortOptionsProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const handleSortTypeClick = (item: SortOption) => {
+  const handleSortTypeClick = (item: string) => {
     setIsOpened(false);
     dispatch(setSortOption(item));
   };

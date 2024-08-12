@@ -13,7 +13,7 @@ function Layout({favoritesCount}: LayoutProps): JSX.Element {
   const authorizationStatus = getAuthorizationStatus();
 
   return (
-    <div className={`page${rootClassName}`}>
+    <div className={`page ${rootClassName}`}>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
