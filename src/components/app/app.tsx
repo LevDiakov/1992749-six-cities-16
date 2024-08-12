@@ -5,19 +5,29 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import Layout from '../layout/layout';
 import PageNotFound from '../page-not-found/page-not-found';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import { PublicRoute } from '../public-route/public-route';
-import { getAuthorizationStatus } from '../../authorization-status';
 import { reviews } from '../../mocks/reviews';
 import { fullOffers } from '../../mocks/full-offers';
 import { useAppSelector } from '../../store/hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
+//import { getAuthorizationStatus } from '../../authorization-status';
 
 
 function App(): JSX.Element {
-  const authorizationStatus = getAuthorizationStatus();
+  //const authorizationStatus = getAuthorizationStatus();
   const stateOffers = useAppSelector((state) => state.rental.offers);
   const favorites = stateOffers.filter((item) => item.isFavorite);
+
+  const authorizationStatus = useAppSelector((state) => state.rental.authorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.rental.isOffersDataLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>

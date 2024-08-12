@@ -11,6 +11,7 @@ type InitialState = {
   sortOption: SortOption;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
+  isOffersDataLoading: boolean;
 }
 
 const initialState: InitialState = {
@@ -19,6 +20,7 @@ const initialState: InitialState = {
   sortOption: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
+  isOffersDataLoading: false,
 };
 
 const rentalSlice = createSlice({
@@ -40,10 +42,13 @@ const rentalSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
+    setOffersDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isOffersDataLoading = action.payload;
+    },
   }
 });
 
-export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError } = rentalSlice.actions;
+export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 

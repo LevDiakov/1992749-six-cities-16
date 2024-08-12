@@ -25,31 +25,28 @@ function MainPage({stateOffers}: MainPageProps): JSX.Element {
   };
 
   return (
-
-    <div className="page page--gray page--main">
-      <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {CITY_NAMES.map((item) => (
-                <li className="locations__item" key={item} onClick={() => handleCityChange(item)}>
-                  <Link className={`locations__item-link tabs__item ${(item === currentCity) ? 'tabs__item--active' : ''}`} to="#">
-                    <span>{item}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-        <ListOffers
-          currentCity={currentCity}
-          onListOfferHover={handleListOfferHover}
-          selectedOffer={selectedOffer}
-          stateOffers={stateOffers}
-        />
-      </main>
-    </div>
+    <main className="page__main page__main--index">
+      <h1 className="visually-hidden">Cities</h1>
+      <div className="tabs">
+        <section className="locations container">
+          <ul className="locations__list tabs__list">
+            {CITY_NAMES.map((item) => (
+              <li className="locations__item" key={item} onClick={() => handleCityChange(item)}>
+                <Link className={`locations__item-link tabs__item ${(item === currentCity) ? 'tabs__item--active' : ''}`} to="#">
+                  <span>{item}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+      <ListOffers
+        currentCity={currentCity}
+        onListOfferHover={handleListOfferHover}
+        selectedOffer={selectedOffer}
+        stateOffers={stateOffers}
+      />
+    </main>
   );
 }
 
