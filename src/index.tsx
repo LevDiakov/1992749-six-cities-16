@@ -6,6 +6,9 @@ import { store } from './store';
 import { offers } from './mocks/offers';
 import { setOffers } from './features/sorting-offers-by-cities';
 import ErrorMessage from './components/error-message/error-message';
+import { checkAuthAction } from './store/api-actions';
+
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
