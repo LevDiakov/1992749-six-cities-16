@@ -1,8 +1,5 @@
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Offer, SortOption } from '../types/types';
-import { AppDispatch } from '../store';
-import { offers } from '../mocks/offers';
 import { AuthorizationStatus } from '../const';
 
 type InitialState = {
@@ -52,6 +49,3 @@ export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, s
 
 export const rentalReducer = rentalSlice.reducer;
 
-export const loadOffers = () => (dispatch: AppDispatch) => { // func для загрузки моковых данных в store
-  dispatch(setOffers(offers));
-};

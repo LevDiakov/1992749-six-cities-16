@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { AuthorizationStatus, REVIEWS_RATING } from '../../const';
 import { userReviews } from '../../types/types';
 import { getRandomElement } from '../../mocks/reviews';
-import { getAuthorizationStatus } from '../../authorization-status';
 import { gethumanizeDate, getSortedByDates } from '../../utils';
+import { useAppSelector } from '../../store/hooks';
 
 type ReviewsProps = {
   reviews: userReviews[];
 }
 
 function Reviews({reviews}: ReviewsProps): JSX.Element {
-  const authorizationStatus = getAuthorizationStatus();
+  const authorizationStatus = useAppSelector((state) => state.rental.authorizationStatus);
   const reviewsRandom = getRandomElement(reviews);
   const [formData, setFormData] = useState({
     rating: 0,
