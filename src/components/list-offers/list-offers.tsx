@@ -1,4 +1,3 @@
-
 import { useAppSelector } from '../../store/hooks';
 import { Offer, SortOption } from '../../types/types';
 import { getOffersForCurrentCityBySortOption } from '../../utils';

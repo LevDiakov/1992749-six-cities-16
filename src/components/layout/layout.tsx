@@ -1,7 +1,8 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { getAuthorizationStatus } from '../../authorization-status';
 import { getLayoutState } from '../../utils';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logoutAction } from '../../store/api-actions';
 
 type LayoutProps = {
   favoritesCount: number;
@@ -10,8 +11,8 @@ type LayoutProps = {
 function Layout({favoritesCount}: LayoutProps): JSX.Element {
   const {pathname} = useLocation();
   const {rootClassName, linkClassName, shouldRenderUser, shouldRenderFooter} = getLayoutState(pathname as AppRoute);
-  const authorizationStatus = getAuthorizationStatus();
-
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector((state) => state.rental.authorizationStatus);
   return (
     <div className={`page ${rootClassName}`}>
       <header className="header">
@@ -41,7 +42,12 @@ function Layout({favoritesCount}: LayoutProps): JSX.Element {
                     {authorizationStatus === AuthorizationStatus.Auth ? (
                       <li className="header__nav-item">
                         <a className="header__nav-link" href="#">
-                          <span className="header__signout">Sign out</span>
+                          <span className="header__signout" onClick={(evt) => {
+                            evt.preventDefault();
+                            dispatch(logoutAction());
+                          }}
+                          >Sign out
+                          </span>
                         </a>
                       </li>
                     ) : null}

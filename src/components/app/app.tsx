@@ -12,11 +12,9 @@ import { reviews } from '../../mocks/reviews';
 import { fullOffers } from '../../mocks/full-offers';
 import { useAppSelector } from '../../store/hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
-//import { getAuthorizationStatus } from '../../authorization-status';
 
 
 function App(): JSX.Element {
-  //const authorizationStatus = getAuthorizationStatus();
   const stateOffers = useAppSelector((state) => state.rental.offers);
   const favorites = stateOffers.filter((item) => item.isFavorite);
 
