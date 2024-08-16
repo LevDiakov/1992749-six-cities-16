@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Offer, SortOption } from '../types/types';
+import { FullOffer, Offer, SortOption, userReviews } from '../types/types';
 import { AppRoute, AuthorizationStatus } from '../const';
 
 type InitialState = {
   currentCity: string;
   offers: Offer[];
+  currentOffer: FullOffer | null;
+  reviews: userReviews;
+  isCurrentOfferLoadingStatus: boolean;
+  isReviewsLoadingStatus: boolean;
   sortOption: SortOption;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
@@ -15,6 +19,10 @@ type InitialState = {
 const initialState: InitialState = {
   currentCity: 'Paris',
   offers: [],
+  currentOffer: null,
+  reviews: [],
+  isCurrentOfferLoadingStatus: true,
+  isReviewsLoadingStatus: true,
   sortOption: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
@@ -31,6 +39,18 @@ const rentalSlice = createSlice({
     },
     setOffers: (state, action: PayloadAction<Offer[]>) => {
       state.offers = action.payload;
+    },
+    setCurrentOffer: (state, action: PayloadAction<FullOffer>) => {
+      state.currentOffer = action.payload;
+    },
+    setCurrentOfferLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isCurrentOfferLoadingStatus = action.payload;
+    },
+    setReviews: (state, action: PayloadAction<userReviews>) => {
+      state.reviews = action.payload;
+    },
+    setReviewsLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isReviewsLoadingStatus = action.payload;
     },
     setSortOption: (state, action: PayloadAction<SortOption>) => {
       state.sortOption = action.payload;
@@ -50,7 +70,8 @@ const rentalSlice = createSlice({
   }
 });
 
-export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus, redirectToRoute } = rentalSlice.actions;
+export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus, redirectToRoute,
+  setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, setReviewsLoadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 

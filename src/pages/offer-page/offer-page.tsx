@@ -1,26 +1,40 @@
 import { Navigate, useParams } from 'react-router-dom';
 import Reviews from '../../components/reviews/reviews';
-import { FullOffer, Offer, userReviews} from '../../types/types';
 import { getCapitalLetter } from '../../utils';
-import { offers } from '../../mocks/offers';
-import PlaceCard from '../../components/place-card/place-card';
 import { AppRoute, NumericalValues } from '../../const';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
-import Map from '../../components/map/map';
+// import Map from '../../components/map/map';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchFullOfferAction, fetchReviewsAction } from '../../store/api-actions';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
-type OfferPageProps = {
-  fullOffers: FullOffer[];
-  reviews: userReviews[];
-}
-
-function OfferPage({fullOffers, reviews}: OfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const {id} = useParams();
-  const currentOffer: FullOffer | undefined = fullOffers.find((item) => item.id === id);
-  if (!currentOffer) {
+  const currentActivOffer = useAppSelector((state) => state.rental.currentOffer);
+  const setReviews = useAppSelector((state) => state.rental.reviews);
+  const isCurrentOfferLoadingStatus = useAppSelector((state) => state.rental.isCurrentOfferLoadingStatus);
+  const isReviewsLoadingStatus = useAppSelector((state) => state.rental.isReviewsLoadingStatus);
+  useEffect(() => {
+    if(id) {
+      dispatch(fetchFullOfferAction(id));
+      dispatch(fetchReviewsAction(id));
+    }
+  }, [dispatch, id]);
+
+
+  if (isCurrentOfferLoadingStatus || isReviewsLoadingStatus) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  if (!currentActivOffer) {
     return <Navigate to={AppRoute.NotFound} replace/>;
   }
-  const selectedOffer: Offer | undefined = offers.find((item) => item.id === currentOffer.id);
-  const {bedrooms, images, isPremium, rating, title, type, maxAdults, price, goods, host, description, isFavorite} = currentOffer;
+
+  const {bedrooms, images, isPremium, rating, title, type, maxAdults, price, goods, host, description, isFavorite} = currentActivOffer;
 
   return (
     <div className="page">
@@ -100,18 +114,18 @@ function OfferPage({fullOffers, reviews}: OfferPageProps): JSX.Element {
                 </div>
               </div>
 
-              <Reviews reviews={reviews}/>
+              {<Reviews reviews={setReviews}/>}
 
             </div>
           </div>
-          <Map city={currentOffer.city} selectedOffer={selectedOffer} offers={offers.slice(NumericalValues.Zero, NumericalValues.Four)} className='offer'/>
+          {/*<Map city={currentOffer.city} selectedOffer={selectedOffer} offers={offers.slice(NumericalValues.Zero, NumericalValues.Four)} className='offer'/>*/}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              {offers.slice(NumericalValues.Zero, NumericalValues.Three).map((item) => <PlaceCard key={item.id} offer={item} className='near-places'/>)}
+              {/*offers.slice(NumericalValues.Zero, NumericalValues.Three).map((item) => <PlaceCard key={item.id} offer={item} className='near-places'/>)*/}
 
             </div>
           </section>

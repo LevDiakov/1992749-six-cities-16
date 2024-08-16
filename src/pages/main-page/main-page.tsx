@@ -11,6 +11,7 @@ type MainPageProps = {
 }
 
 function MainPage({stateOffers}: MainPageProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const handleListOfferHover = (id?: string) => {
@@ -18,7 +19,6 @@ function MainPage({stateOffers}: MainPageProps): JSX.Element {
     setSelectedOffer(currentOffer);
   };
 
-  const dispatch = useAppDispatch();
   const currentCity = useAppSelector((state) => state.rental.currentCity);
   const handleCityChange = (city: string) => {
     dispatch(setCurrentCity(city));

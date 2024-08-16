@@ -1,17 +1,15 @@
 import { useState } from 'react';
-import { AuthorizationStatus, REVIEWS_RATING } from '../../const';
+import { AuthorizationStatus, NumericalValues, REVIEWS_RATING } from '../../const';
 import { userReviews } from '../../types/types';
-import { getRandomElement } from '../../mocks/reviews';
 import { gethumanizeDate, getSortedByDates } from '../../utils';
 import { useAppSelector } from '../../store/hooks';
 
 type ReviewsProps = {
-  reviews: userReviews[];
+  reviews: userReviews;
 }
 
 function Reviews({reviews}: ReviewsProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.rental.authorizationStatus);
-  const reviewsRandom = getRandomElement(reviews);
   const [formData, setFormData] = useState({
     rating: 0,
     review: '',
@@ -20,10 +18,10 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
   return (
     <section className="offer__reviews reviews">
       <h2 className="reviews__title">
-    Reviews · <span className="reviews__amount">{reviewsRandom.length}</span>
+    Reviews · <span className="reviews__amount">{reviews.length}</span>
       </h2>
       <ul className="reviews__list">
-        {reviewsRandom.sort(getSortedByDates).map((item) => (reviewsRandom.length > 0 ? (
+        {reviews.sort(getSortedByDates).map((item) => (reviews.length > 0 ? (
           <li className="reviews__item" key={crypto.randomUUID()}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -40,7 +38,7 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
             <div className="reviews__info">
               <div className="reviews__rating rating">
                 <div className="reviews__stars rating__stars">
-                  <span style={{width: `${(item.rating * 20)}%`}} />
+                  <span style={{width: `${(item.rating * NumericalValues.Twenty)}%`}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
               </div>

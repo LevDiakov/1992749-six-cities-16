@@ -3,8 +3,8 @@ import { AxiosInstance } from 'axios';
 import { AppDispatch, RootState, store } from '.';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../services/token';
-import { redirectToRoute, requireAuthorization, setError, setOffers, setOffersDataLoadingStatus } from '../features/sorting-offers-by-cities';
-import { AuthData, Offer, UserData } from '../types/types';
+import { redirectToRoute, requireAuthorization, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setReviews, setReviewsLoadingStatus } from '../features/sorting-offers-by-cities';
+import { AuthData, FullOffer, Offer, UserData, userReviews } from '../types/types';
 
 export const clearErrorAction = createAsyncThunk(
   '/clearError',
@@ -29,6 +29,34 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     dispatch(setOffers(data));
   },
 );
+
+export const fetchFullOfferAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: RootState;
+  extra: AxiosInstance;
+  }>(
+    '/offer/:id',
+    async (offerId, {dispatch, extra: api}) => {
+      dispatch(setCurrentOfferLoadingStatus(true));
+      const {data} = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
+      dispatch(setCurrentOfferLoadingStatus(false));
+      dispatch(setCurrentOffer(data));
+    },
+  );
+
+export const fetchReviewsAction = createAsyncThunk<void, string, {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+    }>(
+      '/comments/:id',
+      async (offerId, {dispatch, extra: api}) => {
+        dispatch(setReviewsLoadingStatus(true));
+        const {data} = await api.get<userReviews>(`${APIRoute.Comments}/${offerId}`);
+        dispatch(setReviewsLoadingStatus(false));
+        dispatch(setReviews(data));
+      },
+    );
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
