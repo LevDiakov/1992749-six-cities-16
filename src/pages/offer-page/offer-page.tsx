@@ -6,25 +6,28 @@ import FavoriteButton from '../../components/favorite-button/favorite-button';
 // import Map from '../../components/map/map';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchFullOfferAction, fetchReviewsAction } from '../../store/api-actions';
+import { fetchFullOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-actions';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+import PlaceCard from '../../components/place-card/place-card';
 
 function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const currentActivOffer = useAppSelector((state) => state.rental.currentOffer);
-  const setReviews = useAppSelector((state) => state.rental.reviews);
+  const reviews = useAppSelector((state) => state.rental.reviews);
+  const offersNearby = useAppSelector((state) => state.rental.offersNearby);
   const isCurrentOfferLoadingStatus = useAppSelector((state) => state.rental.isCurrentOfferLoadingStatus);
   const isReviewsLoadingStatus = useAppSelector((state) => state.rental.isReviewsLoadingStatus);
+  const isOffersNearbyLoadingStatus = useAppSelector((state) => state.rental.isOffersNearbyLoadingStatus);
   useEffect(() => {
     if(id) {
       dispatch(fetchFullOfferAction(id));
       dispatch(fetchReviewsAction(id));
+      dispatch(fetchOffersNearbyAction(id));
     }
   }, [dispatch, id]);
 
-
-  if (isCurrentOfferLoadingStatus || isReviewsLoadingStatus) {
+  if (isCurrentOfferLoadingStatus || isReviewsLoadingStatus || isOffersNearbyLoadingStatus) {
     return (
       <LoadingScreen />
     );
@@ -114,7 +117,7 @@ function OfferPage(): JSX.Element {
                 </div>
               </div>
 
-              {<Reviews reviews={setReviews}/>}
+              {<Reviews reviews={reviews}/>}
 
             </div>
           </div>
@@ -125,7 +128,7 @@ function OfferPage(): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
 
-              {/*offers.slice(NumericalValues.Zero, NumericalValues.Three).map((item) => <PlaceCard key={item.id} offer={item} className='near-places'/>)*/}
+              {offersNearby.slice(NumericalValues.Zero, NumericalValues.Three).map((item) => <PlaceCard key={item.id} offer={item} className='near-places'/>)}
 
             </div>
           </section>

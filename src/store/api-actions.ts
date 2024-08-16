@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { AppDispatch, RootState, store } from '.';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../services/token';
-import { redirectToRoute, requireAuthorization, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setReviews, setReviewsLoadingStatus } from '../features/sorting-offers-by-cities';
+import { redirectToRoute, requireAuthorization, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus } from '../features/sorting-offers-by-cities';
 import { AuthData, FullOffer, Offer, UserData, userReviews } from '../types/types';
 
 export const clearErrorAction = createAsyncThunk(
@@ -43,6 +43,20 @@ export const fetchFullOfferAction = createAsyncThunk<void, string, {
       dispatch(setCurrentOffer(data));
     },
   );
+
+export const fetchOffersNearbyAction = createAsyncThunk<void, string, {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+    }>(
+      '/offer/:id/nearby',
+      async (offerId, {dispatch, extra: api}) => {
+        dispatch(setOffersNearbyLoadingStatus(true));
+        const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+        dispatch(setOffersNearbyLoadingStatus(false));
+        dispatch(setOffersNearby(data));
+      },
+    );
 
 export const fetchReviewsAction = createAsyncThunk<void, string, {
     dispatch: AppDispatch;

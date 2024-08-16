@@ -5,6 +5,8 @@ import { AppRoute, AuthorizationStatus } from '../const';
 type InitialState = {
   currentCity: string;
   offers: Offer[];
+  offersNearby: Offer[];
+  isOffersNearbyLoadingStatus: boolean;
   currentOffer: FullOffer | null;
   reviews: userReviews;
   isCurrentOfferLoadingStatus: boolean;
@@ -19,6 +21,8 @@ type InitialState = {
 const initialState: InitialState = {
   currentCity: 'Paris',
   offers: [],
+  offersNearby: [],
+  isOffersNearbyLoadingStatus: true,
   currentOffer: null,
   reviews: [],
   isCurrentOfferLoadingStatus: true,
@@ -52,6 +56,12 @@ const rentalSlice = createSlice({
     setReviewsLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isReviewsLoadingStatus = action.payload;
     },
+    setOffersNearby: (state, action: PayloadAction<Offer[]>) => {
+      state.offersNearby = action.payload;
+    },
+    setOffersNearbyLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isOffersNearbyLoadingStatus = action.payload;
+    },
     setSortOption: (state, action: PayloadAction<SortOption>) => {
       state.sortOption = action.payload;
     },
@@ -71,7 +81,7 @@ const rentalSlice = createSlice({
 });
 
 export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus, redirectToRoute,
-  setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, setReviewsLoadingStatus } = rentalSlice.actions;
+  setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, setReviewsLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 
