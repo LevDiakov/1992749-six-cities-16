@@ -3,7 +3,7 @@ import Reviews from '../../components/reviews/reviews';
 import { getCapitalLetter } from '../../utils';
 import { AppRoute, NumericalValues } from '../../const';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
-// import Map from '../../components/map/map';
+import Map from '../../components/map/map';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchFullOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-actions';
@@ -121,7 +121,7 @@ function OfferPage(): JSX.Element {
 
             </div>
           </div>
-          {/*<Map city={currentOffer.city} selectedOffer={selectedOffer} offers={offers.slice(NumericalValues.Zero, NumericalValues.Four)} className='offer'/>*/}
+          {<Map city={currentActivOffer.city} selectedOffer={offersNearby.find((point) => point.id === currentActivOffer.id)} offers={offersNearby.slice(NumericalValues.Zero, NumericalValues.Three)} className='offer'/>}
         </section>
         <div className="container">
           <section className="near-places places">

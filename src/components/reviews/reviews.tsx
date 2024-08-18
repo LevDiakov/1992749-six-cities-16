@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AuthorizationStatus, NumericalValues, REVIEWS_RATING } from '../../const';
+import { AuthorizationStatus, COMMENT_LENGTH, NumericalValues, REVIEWS_RATING } from '../../const';
 import { userReviews } from '../../types/types';
 import { gethumanizeDate, getSortedByDates } from '../../utils';
 import { useAppSelector } from '../../store/hooks';
@@ -14,6 +14,9 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
     rating: 0,
     review: '',
   });
+  const validateForm = () =>
+    formData.rating && formData.review.length >= COMMENT_LENGTH.min && formData.review.length <= COMMENT_LENGTH.max;
+  const isDisabled = !validateForm();
 
   return (
     <section className="offer__reviews reviews">
@@ -21,7 +24,7 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
     Reviews · <span className="reviews__amount">{reviews.length}</span>
       </h2>
       <ul className="reviews__list">
-        {reviews.sort(getSortedByDates).map((item) => (reviews.length > 0 ? (
+        {[...reviews].sort(getSortedByDates).map((item) => (reviews.length > 0 ? (
           <li className="reviews__item" key={crypto.randomUUID()}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -53,7 +56,12 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
         ))}
       </ul>
       {authorizationStatus === AuthorizationStatus.Auth ? (
-        <form className="reviews__form form" action="#" method="post">
+        <form className="reviews__form form" action="#" method="post"
+          onSubmit={(evt) => {
+            evt.preventDefault();
+            // fetchSubmitAction
+          }}
+        >
           <label className="reviews__label form__label" htmlFor="review">
       Your review
           </label>
@@ -96,18 +104,21 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
-
+          minLength={COMMENT_LENGTH.min}
+          maxLength={COMMENT_LENGTH.max}
           />
           <div className="reviews__button-wrapper">
             <p className="reviews__help">
         To submit review please make sure to set{' '}
               <span className="reviews__star">rating</span> and describe your stay
-        with at least <b className="reviews__text-amount">50 characters</b>.
+        with at least <b className="reviews__text-amount">50 characters </b>
+        and no more than <b className="reviews__text-amount">300 characters</b>.<br/>
+        There are <b className="reviews__text-amount">{COMMENT_LENGTH.max - formData.review.length} characters</b> left to use.
             </p>
             <button
               className="reviews__submit form__submit button"
               type="submit"
-              disabled={false}
+              disabled={isDisabled}
             >
         Submit
             </button>

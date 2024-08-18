@@ -28,7 +28,9 @@ function Map({city, offers, selectedOffer, className}: MapProps) {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-
+  if(selectedOffer){
+    offers.push(selectedOffer);
+  }
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
