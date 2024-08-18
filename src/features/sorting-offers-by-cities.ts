@@ -9,6 +9,7 @@ type InitialState = {
   isOffersNearbyLoadingStatus: boolean;
   currentOffer: FullOffer | null;
   reviews: userReviews;
+  postReviews: userReviews;
   isCurrentOfferLoadingStatus: boolean;
   isReviewsLoadingStatus: boolean;
   sortOption: SortOption;
@@ -25,6 +26,7 @@ const initialState: InitialState = {
   isOffersNearbyLoadingStatus: true,
   currentOffer: null,
   reviews: [],
+  postReviews: [],
   isCurrentOfferLoadingStatus: true,
   isReviewsLoadingStatus: true,
   sortOption: 'Popular',
@@ -52,6 +54,9 @@ const rentalSlice = createSlice({
     },
     setReviews: (state, action: PayloadAction<userReviews>) => {
       state.reviews = action.payload;
+    },
+    setPostReviews: (state, action: PayloadAction<userReviews>) => {
+      state.postReviews = action.payload;
     },
     setReviewsLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isReviewsLoadingStatus = action.payload;

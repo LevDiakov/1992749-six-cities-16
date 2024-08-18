@@ -72,6 +72,20 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
       },
     );
 
+export const postReviewsAction = createAsyncThunk<void, string, {
+      dispatch: AppDispatch;
+      state: RootState;
+      extra: AxiosInstance;
+      }>(
+        '/comments/:id',
+        async (offerId, {dispatch, extra: api}) => {
+          dispatch(setReviewsLoadingStatus(true));
+          const {data} = await api.post<userReviews>(`${APIRoute.Comments}/${offerId}`);
+          dispatch(setReviewsLoadingStatus(false));
+          dispatch(setReviews(data));
+        },
+      );
+
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: RootState;
