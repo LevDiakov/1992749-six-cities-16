@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FullOffer, Offer, SortOption, userReviews } from '../types/types';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AuthorizationStatus } from '../const';
 
 type InitialState = {
   currentCity: string;
@@ -16,7 +16,6 @@ type InitialState = {
   authorizationStatus: AuthorizationStatus;
   error: string | null;
   isOffersDataLoading: boolean;
-  redirectToRoute: AppRoute;
 }
 
 const initialState: InitialState = {
@@ -33,7 +32,6 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   isOffersDataLoading: false,
-  redirectToRoute: AppRoute.Main,
 };
 
 const rentalSlice = createSlice({
@@ -79,13 +77,10 @@ const rentalSlice = createSlice({
     setOffersDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isOffersDataLoading = action.payload;
     },
-    redirectToRoute: (state, action: PayloadAction<AppRoute>) => {
-      state.redirectToRoute = action.payload;
-    },
   }
 });
 
-export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus, redirectToRoute,
+export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus,
   setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, setReviewsLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;

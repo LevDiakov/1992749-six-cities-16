@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { rentalReducer } from '../features/sorting-offers-by-cities';
 import { createAPI } from '../services/api';
-// import { redirect } from './middlewares/redirect';
 
 export const api = createAPI();
 
@@ -14,7 +13,7 @@ export const store = configureStore({
       thunk: {
         extraArgument: api,
       },
-    }), //.concat(redirect),
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

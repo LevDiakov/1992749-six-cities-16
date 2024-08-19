@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from '../../pages/main-page/main-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import LoginPage from '../../pages/login-page/login-page';
@@ -10,8 +10,6 @@ import PrivateRoute from '../private-route/private-route';
 import { PublicRoute } from '../public-route/public-route';
 import { useAppSelector } from '../../store/hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
-import browserHistory from '../../browser-history/browser-history';
-import HistoryRouter from '../history-route/history-route';
 
 
 function App(): JSX.Element {
@@ -28,7 +26,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} element={<Layout favoritesCount={favorites.length}/>} >
           <Route index element={
@@ -58,7 +56,7 @@ function App(): JSX.Element {
         </Route>
         <Route path='*' element={<PageNotFound />} />
       </Routes>
-    </HistoryRouter>
+    </BrowserRouter>
   );
 }
 
