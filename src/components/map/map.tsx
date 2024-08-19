@@ -3,7 +3,7 @@ import leaflet, { layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
-import { City, Offer } from '../../types/types';
+import { City, FullOffer, Offer } from '../../types/types';
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -19,8 +19,8 @@ const currentCustomIcon = leaflet.icon({
 
 type MapProps = {
   city: City;
-  offers: Offer[];
-  selectedOffer?: Offer;
+  offers: (Offer | FullOffer)[];
+  selectedOffer?: Offer | FullOffer;
   className: string;
 }
 

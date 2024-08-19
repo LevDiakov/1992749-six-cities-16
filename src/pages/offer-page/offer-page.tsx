@@ -121,7 +121,7 @@ function OfferPage(): JSX.Element {
 
             </div>
           </div>
-          {<Map city={currentActivOffer.city} selectedOffer={offersNearby.find((point) => point.id === currentActivOffer.id)} offers={offersNearby.slice(NumericalValues.Zero, NumericalValues.Three)} className='offer'/>}
+          {<Map city={currentActivOffer.city} selectedOffer={currentActivOffer} offers={offersNearby.slice(NumericalValues.Zero, NumericalValues.Three)} className='offer'/>}
         </section>
         <div className="container">
           <section className="near-places places">
