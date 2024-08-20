@@ -4,7 +4,7 @@ import { AppDispatch, RootState, store } from '.';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../services/token';
 import { addReviews, requireAuthorization, setAuthorizationUser, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus, setReviewsUploadingStatus } from '../features/sorting-offers-by-cities';
-import { AuthData, AuthorizationUser, FullOffer, Message, Offer, UserData, userReview, userReviews } from '../types/types';
+import { AuthData, AuthorizationUser, FullOffer, Message, Offer, userReview, userReviews } from '../types/types';
 
 export const clearErrorAction = createAsyncThunk(
   '/clearError',
@@ -111,8 +111,9 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   '/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<AuthorizationUser>(APIRoute.Login, {email, password});
+    saveToken(data.token);
+    dispatch(setAuthorizationUser(data));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   },
 );

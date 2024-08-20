@@ -76,12 +76,6 @@ export type AuthData = {
   password: string;
 };
 
-export type UserData = {
-  id: number;
-  email: string;
-  token: string;
-};
-
 export type AuthorizationUser = {
   email: string;
   token: string;
