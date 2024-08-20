@@ -3,8 +3,8 @@ import { AxiosInstance } from 'axios';
 import { AppDispatch, RootState, store } from '.';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../services/token';
-import { requireAuthorization, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus } from '../features/sorting-offers-by-cities';
-import { addReview, AuthData, FullOffer, Offer, UserData, userReview, userReviews } from '../types/types';
+import { requireAuthorization, setAuthorizationUser, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus } from '../features/sorting-offers-by-cities';
+import { addReview, AuthData, AuthorizationUser, FullOffer, Offer, UserData, userReview, userReviews } from '../types/types';
 
 export const clearErrorAction = createAsyncThunk(
   '/clearError',
@@ -95,7 +95,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   '/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get<AuthorizationUser>(APIRoute.Login);
+      dispatch(setAuthorizationUser(data));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));

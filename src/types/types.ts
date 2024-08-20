@@ -81,3 +81,11 @@ export type UserData = {
   email: string;
   token: string;
 };
+
+export type AuthorizationUser = {
+  email: string;
+  token: string;
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
+}

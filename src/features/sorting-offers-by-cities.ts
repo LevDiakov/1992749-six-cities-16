@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addReview, FullOffer, Offer, SortOption, userReview, userReviews } from '../types/types';
+import { addReview, AuthorizationUser, FullOffer, Offer, SortOption, userReview, userReviews } from '../types/types';
 import { AuthorizationStatus } from '../const';
 
 type InitialState = {
@@ -15,6 +15,7 @@ type InitialState = {
   authorizationStatus: AuthorizationStatus;
   error: string | null;
   isOffersDataLoading: boolean;
+  authorizationUser: AuthorizationUser | null;
 }
 
 const initialState: InitialState = {
@@ -30,6 +31,7 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   isOffersDataLoading: false,
+  authorizationUser: null,
 };
 
 const rentalSlice = createSlice({
@@ -69,6 +71,9 @@ const rentalSlice = createSlice({
     requireAuthorization: (state, action: PayloadAction<AuthorizationStatus>) => {
       state.authorizationStatus = action.payload;
     },
+    setAuthorizationUser: (state, action: PayloadAction<AuthorizationUser>) => {
+      state.authorizationUser = action.payload;
+    },
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
@@ -80,7 +85,7 @@ const rentalSlice = createSlice({
 
 export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus,
   setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, addReviews, setReviewsLoadingStatus, setOffersNearby,
-  setOffersNearbyLoadingStatus } = rentalSlice.actions;
+  setOffersNearbyLoadingStatus, setAuthorizationUser } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 

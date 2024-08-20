@@ -13,6 +13,7 @@ function Layout({favoritesCount}: LayoutProps): JSX.Element {
   const {rootClassName, linkClassName, shouldRenderUser, shouldRenderFooter} = getLayoutState(pathname as AppRoute);
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector((state) => state.rental.authorizationStatus);
+  const authorizationUser = useAppSelector((state) => state.rental.authorizationUser);
   return (
     <div className={`page ${rootClassName}`}>
       <header className="header">
@@ -33,7 +34,7 @@ function Layout({favoritesCount}: LayoutProps): JSX.Element {
                         </div>
                         {authorizationStatus === AuthorizationStatus.Auth ? (
                           <>
-                            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                            <span className="header__user-name user__name">{authorizationUser?.email}</span>
                             <span className="header__favorite-count">{favoritesCount}</span>
                           </>
                         ) : <span className="header__login">Sign in</span>}
