@@ -3,8 +3,8 @@ import { AxiosInstance } from 'axios';
 import { AppDispatch, RootState, store } from '.';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../services/token';
-import { requireAuthorization, setAuthorizationUser, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus } from '../features/sorting-offers-by-cities';
-import { addReview, AuthData, AuthorizationUser, FullOffer, Offer, UserData, userReview, userReviews } from '../types/types';
+import { addReviews, requireAuthorization, setAuthorizationUser, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus, setReviewsUploadingStatus } from '../features/sorting-offers-by-cities';
+import { AuthData, AuthorizationUser, FullOffer, Message, Offer, UserData, userReview, userReviews } from '../types/types';
 
 export const clearErrorAction = createAsyncThunk(
   '/clearError',
@@ -72,18 +72,18 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
       },
     );
 
-export const addReviewsAction = createAsyncThunk<void, string, {
+export const addReviewsAction = createAsyncThunk<void, Message, {
       dispatch: AppDispatch;
       state: RootState;
       extra: AxiosInstance;
       }>(
         '/comments/:id',
         async ({ offerId, data}, {dispatch, extra: api}) => {
-          //dispatch(setReviewsLoadingStatus(true));
-          await api.post<userReview | addReview>(`${APIRoute.Comments}/${offerId}`, data);
-          //dispatch(setReviewsLoadingStatus(false));
+          dispatch(setReviewsUploadingStatus(true));
+          const {data: newComment} = await api.post<userReview>(`${APIRoute.Comments}/${offerId}`, data);
+          dispatch(setReviewsUploadingStatus(false));
 
-          // dispatch(addReviews(data));
+          dispatch(addReviews(newComment));
         },
       );
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { AuthorizationStatus, COMMENT_LENGTH, NumericalValues, REVIEWS_RATING } from '../../const';
 import { userReviews } from '../../types/types';
 import { gethumanizeDate, getSortedByDates } from '../../utils';
@@ -21,6 +21,15 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
   const validateForm = () =>
     formData.rating && formData.comment.length >= COMMENT_LENGTH.min && formData.comment.length <= COMMENT_LENGTH.max;
   const isDisabled = !validateForm();
+  const isFormUploading = useAppSelector((state) => state.rental.isReviewsUploadingStatus);
+  useEffect(() => {
+    if (!isFormUploading) {
+      setFormData({
+        rating: 0,
+        comment: '',
+      });
+    }
+  }, [isFormUploading]);
 
   return (
     <section className="offer__reviews reviews">
@@ -75,11 +84,11 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
           </label>
           <div className="reviews__rating-form form__rating" >
             {REVIEWS_RATING.map(({title, rank}) => (
-              <div key={title} >
+              <Fragment key={title} >
                 <input
                   className="form__rating-input visually-hidden"
                   name="rating"
-                  defaultValue={rank}
+                  value={rank}
                   id={`${rank}-stars`}
                   type="radio"
                   onChange={
@@ -99,7 +108,7 @@ function Reviews({reviews}: ReviewsProps): JSX.Element {
                     <use xlinkHref="#icon-star" />
                   </svg>
                 </label>
-              </div>
+              </Fragment>
             ))}
           </div>
           <textarea onChange={

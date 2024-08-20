@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addReview, AuthorizationUser, FullOffer, Offer, SortOption, userReview, userReviews } from '../types/types';
+import { AuthorizationUser, FullOffer, Offer, SortOption, userReview, userReviews } from '../types/types';
 import { AuthorizationStatus } from '../const';
 
 type InitialState = {
@@ -11,6 +11,7 @@ type InitialState = {
   reviews: userReviews;
   isCurrentOfferLoadingStatus: boolean;
   isReviewsLoadingStatus: boolean;
+  isReviewsUploadingStatus: boolean;
   sortOption: SortOption;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
@@ -27,6 +28,7 @@ const initialState: InitialState = {
   reviews: [],
   isCurrentOfferLoadingStatus: true,
   isReviewsLoadingStatus: true,
+  isReviewsUploadingStatus: false,
   sortOption: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
@@ -53,11 +55,14 @@ const rentalSlice = createSlice({
     setReviews: (state, action: PayloadAction<userReviews>) => {
       state.reviews = action.payload;
     },
-    addReviews: (state, action: PayloadAction<userReview | addReview>) => {
+    addReviews: (state, action: PayloadAction<userReview>) => {
       state.reviews.push(action.payload);
     },
     setReviewsLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isReviewsLoadingStatus = action.payload;
+    },
+    setReviewsUploadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isReviewsUploadingStatus = action.payload;
     },
     setOffersNearby: (state, action: PayloadAction<Offer[]>) => {
       state.offersNearby = action.payload;
@@ -85,7 +90,7 @@ const rentalSlice = createSlice({
 
 export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus,
   setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, addReviews, setReviewsLoadingStatus, setOffersNearby,
-  setOffersNearbyLoadingStatus, setAuthorizationUser } = rentalSlice.actions;
+  setOffersNearbyLoadingStatus, setAuthorizationUser, setReviewsUploadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 

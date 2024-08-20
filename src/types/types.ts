@@ -89,3 +89,8 @@ export type AuthorizationUser = {
   avatarUrl: string;
   isPro: boolean;
 }
+
+export type Message = {
+  offerId: string | undefined;
+  data: addReview;
+};
