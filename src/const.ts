@@ -16,7 +16,7 @@ export enum AuthorizationStatus {
 
 export const CITY_NAMES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-export const REVIEWS_RATING = [{title: 'perfect', id: 5}, {title: 'good', id: 4}, {title: 'not bad', id: 3},{title: 'badly', id: 2},{title: 'terribly', id: 1}];
+export const REVIEWS_RATING = [{title: 'perfect', rank: 5}, {title: 'good', rank: 4}, {title: 'not bad', rank: 3},{title: 'badly', rank: 2},{title: 'terribly', rank: 1}];
 
 export const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 

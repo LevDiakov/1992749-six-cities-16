@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FullOffer, Offer, SortOption, userReviews } from '../types/types';
+import { addReview, FullOffer, Offer, SortOption, userReview, userReviews } from '../types/types';
 import { AuthorizationStatus } from '../const';
 
 type InitialState = {
@@ -9,7 +9,6 @@ type InitialState = {
   isOffersNearbyLoadingStatus: boolean;
   currentOffer: FullOffer | null;
   reviews: userReviews;
-  postReviews: userReviews;
   isCurrentOfferLoadingStatus: boolean;
   isReviewsLoadingStatus: boolean;
   sortOption: SortOption;
@@ -25,7 +24,6 @@ const initialState: InitialState = {
   isOffersNearbyLoadingStatus: true,
   currentOffer: null,
   reviews: [],
-  postReviews: [],
   isCurrentOfferLoadingStatus: true,
   isReviewsLoadingStatus: true,
   sortOption: 'Popular',
@@ -53,8 +51,8 @@ const rentalSlice = createSlice({
     setReviews: (state, action: PayloadAction<userReviews>) => {
       state.reviews = action.payload;
     },
-    setPostReviews: (state, action: PayloadAction<userReviews>) => {
-      state.postReviews = action.payload;
+    addReviews: (state, action: PayloadAction<userReview | addReview>) => {
+      state.reviews.push(action.payload);
     },
     setReviewsLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isReviewsLoadingStatus = action.payload;
@@ -81,7 +79,8 @@ const rentalSlice = createSlice({
 });
 
 export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus,
-  setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, setReviewsLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus } = rentalSlice.actions;
+  setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, addReviews, setReviewsLoadingStatus, setOffersNearby,
+  setOffersNearbyLoadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 

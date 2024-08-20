@@ -4,7 +4,7 @@ import { AppDispatch, RootState, store } from '.';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../services/token';
 import { requireAuthorization, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus } from '../features/sorting-offers-by-cities';
-import { AuthData, FullOffer, Offer, UserData, userReviews } from '../types/types';
+import { addReview, AuthData, FullOffer, Offer, UserData, userReview, userReviews } from '../types/types';
 
 export const clearErrorAction = createAsyncThunk(
   '/clearError',
@@ -72,17 +72,18 @@ export const fetchReviewsAction = createAsyncThunk<void, string, {
       },
     );
 
-export const postReviewsAction = createAsyncThunk<void, string, {
+export const addReviewsAction = createAsyncThunk<void, string, {
       dispatch: AppDispatch;
       state: RootState;
       extra: AxiosInstance;
       }>(
         '/comments/:id',
-        async (offerId, {dispatch, extra: api}) => {
-          dispatch(setReviewsLoadingStatus(true));
-          const {data} = await api.post<userReviews>(`${APIRoute.Comments}/${offerId}`);
-          dispatch(setReviewsLoadingStatus(false));
-          dispatch(setReviews(data));
+        async ({ offerId, data}, {dispatch, extra: api}) => {
+          //dispatch(setReviewsLoadingStatus(true));
+          await api.post<userReview | addReview>(`${APIRoute.Comments}/${offerId}`, data);
+          //dispatch(setReviewsLoadingStatus(false));
+
+          // dispatch(addReviews(data));
         },
       );
 
