@@ -14,7 +14,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 
 function App(): JSX.Element {
   const stateOffers = useAppSelector((state) => state.rental.offers);
-  const favorites = stateOffers.filter((item) => item.isFavorite);
+  const favorites = useAppSelector((state) => state.rental.favorites);
 
   const authorizationStatus = useAppSelector((state) => state.rental.authorizationStatus);
   const isOffersDataLoading = useAppSelector((state) => state.rental.isOffersDataLoading);

@@ -31,11 +31,11 @@ function LoginPage(): JSX.Element {
           <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden" htmlFor="email">E-mail</label>
-              <input ref={loginRef} id="email" className="login__input form__input" type="email" name="email" placeholder="Email" required={false} />
+              <input ref={loginRef} id="email" className="login__input form__input" type="email" name="email" placeholder="Email" required />
             </div>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden" htmlFor="password">Password</label>
-              <input ref={passwordRef} id="password" className="login__input form__input" type="password" name="password" placeholder="Password" required={false} />
+              <input ref={passwordRef} pattern="^(?=.*[a-zA-Z])(?=.*\d).*$" id="password" className="login__input form__input" type="password" name="password" placeholder="Password" required />
             </div>
             <button className="login__submit form__submit button" type="submit" onClick={() => navigate(AppRoute.Login)}>Sign in</button>
           </form>

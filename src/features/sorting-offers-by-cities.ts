@@ -5,6 +5,9 @@ import { AuthorizationStatus } from '../const';
 type InitialState = {
   currentCity: string;
   offers: Offer[];
+  isOffersDataLoading: boolean;
+  favorites: Offer[];
+  isFavoritesDataLoading: boolean;
   offersNearby: Offer[];
   isOffersNearbyLoadingStatus: boolean;
   currentOffer: FullOffer | null;
@@ -15,13 +18,15 @@ type InitialState = {
   sortOption: SortOption;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
-  isOffersDataLoading: boolean;
   authorizationUser: AuthorizationUser | null;
 }
 
 const initialState: InitialState = {
   currentCity: 'Paris',
   offers: [],
+  isOffersDataLoading: false,
+  favorites: [],
+  isFavoritesDataLoading: false,
   offersNearby: [],
   isOffersNearbyLoadingStatus: true,
   currentOffer: null,
@@ -32,7 +37,6 @@ const initialState: InitialState = {
   sortOption: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
-  isOffersDataLoading: false,
   authorizationUser: null,
 };
 
@@ -45,6 +49,15 @@ const rentalSlice = createSlice({
     },
     setOffers: (state, action: PayloadAction<Offer[]>) => {
       state.offers = action.payload;
+    },
+    setOffersDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isOffersDataLoading = action.payload;
+    },
+    setFavorites: (state, action: PayloadAction<Offer[]>) => {
+      state.favorites = action.payload;
+    },
+    setFavoritesDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isFavoritesDataLoading = action.payload;
     },
     setCurrentOffer: (state, action: PayloadAction<FullOffer>) => {
       state.currentOffer = action.payload;
@@ -82,15 +95,12 @@ const rentalSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
-    setOffersDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
-      state.isOffersDataLoading = action.payload;
-    },
   }
 });
 
 export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus,
   setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, addReviews, setReviewsLoadingStatus, setOffersNearby,
-  setOffersNearbyLoadingStatus, setAuthorizationUser, setReviewsUploadingStatus } = rentalSlice.actions;
+  setOffersNearbyLoadingStatus, setAuthorizationUser, setReviewsUploadingStatus, setFavorites, setFavoritesDataLoadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 
