@@ -8,6 +8,7 @@ type InitialState = {
   isOffersDataLoading: boolean;
   favorites: Offer[];
   isFavoritesDataLoading: boolean;
+  isFavoriteStatusLoading: boolean;
   offersNearby: Offer[];
   isOffersNearbyLoadingStatus: boolean;
   currentOffer: FullOffer | null;
@@ -27,6 +28,7 @@ const initialState: InitialState = {
   isOffersDataLoading: false,
   favorites: [],
   isFavoritesDataLoading: false,
+  isFavoriteStatusLoading: true,
   offersNearby: [],
   isOffersNearbyLoadingStatus: true,
   currentOffer: null,
@@ -58,6 +60,12 @@ const rentalSlice = createSlice({
     },
     setFavoritesDataLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.isFavoritesDataLoading = action.payload;
+    },
+    setFavoriteStatus: (state, action: PayloadAction<Offer[]>) => {
+      state.favorites = action.payload;
+    },
+    setFavoriteStatusLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isFavoriteStatusLoading = action.payload;
     },
     setCurrentOffer: (state, action: PayloadAction<FullOffer>) => {
       state.currentOffer = action.payload;
@@ -100,7 +108,8 @@ const rentalSlice = createSlice({
 
 export const { setCurrentCity, setOffers, setSortOption, requireAuthorization, setError, setOffersDataLoadingStatus,
   setCurrentOffer, setCurrentOfferLoadingStatus, setReviews, addReviews, setReviewsLoadingStatus, setOffersNearby,
-  setOffersNearbyLoadingStatus, setAuthorizationUser, setReviewsUploadingStatus, setFavorites, setFavoritesDataLoadingStatus } = rentalSlice.actions;
+  setOffersNearbyLoadingStatus, setAuthorizationUser, setReviewsUploadingStatus, setFavorites, setFavoritesDataLoadingStatus,
+  setFavoriteStatus, setFavoriteStatusLoadingStatus } = rentalSlice.actions;
 
 export const rentalReducer = rentalSlice.reducer;
 

@@ -88,3 +88,8 @@ export type Message = {
   offerId: string | undefined;
   data: addReview;
 };
+
+export type FavoriteStatus = {
+  offerId: string | undefined;
+  status: number;
+};

@@ -63,7 +63,7 @@ function OfferPage(): JSX.Element {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <FavoriteButton isFavorite={isFavorite} className='offer' />
+                <FavoriteButton isFavorite={isFavorite} className='offer' id={id}/>
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

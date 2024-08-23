@@ -3,8 +3,8 @@ import { AxiosInstance } from 'axios';
 import { AppDispatch, RootState, store } from '.';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { saveToken, dropToken } from '../services/token';
-import { addReviews, requireAuthorization, setAuthorizationUser, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setFavorites, setFavoritesDataLoadingStatus, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus, setReviewsUploadingStatus } from '../features/sorting-offers-by-cities';
-import { AuthData, AuthorizationUser, FullOffer, Message, Offer, userReview, userReviews } from '../types/types';
+import { addReviews, requireAuthorization, setAuthorizationUser, setCurrentOffer, setCurrentOfferLoadingStatus, setError, setFavorites, setFavoritesDataLoadingStatus, setFavoriteStatus, setFavoriteStatusLoadingStatus, setOffers, setOffersDataLoadingStatus, setOffersNearby, setOffersNearbyLoadingStatus, setReviews, setReviewsLoadingStatus, setReviewsUploadingStatus } from '../features/sorting-offers-by-cities';
+import { AuthData, AuthorizationUser, FavoriteStatus, FullOffer, Message, Offer, userReview, userReviews } from '../types/types';
 
 export const clearErrorAction = createAsyncThunk(
   '/clearError',
@@ -142,5 +142,19 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+  },
+);
+
+export const postFavoritesAction = createAsyncThunk<void, FavoriteStatus, {
+  dispatch: AppDispatch;
+  state: RootState;
+  extra: AxiosInstance;
+}>(
+  '/favorite',
+  async ({offerId, status}, {dispatch, extra: api}) => {
+    dispatch(setFavoriteStatusLoadingStatus(true));
+    const {data} = await api.post<Offer[]>(`${APIRoute.Favorites}/${offerId}/${status}`);
+    dispatch(setFavoriteStatusLoadingStatus(false));
+    dispatch(setFavoriteStatus(data));
   },
 );
